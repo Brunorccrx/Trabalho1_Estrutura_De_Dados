@@ -1,5 +1,4 @@
 #Trabalho1_Estrutura_De_Dados
-Trabalho 1 
 
 Instruções para execução
 
