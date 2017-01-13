@@ -36,7 +36,7 @@ Dicionario *definirDicionario(char *string, Dicionario *dicionario){
 		while(string[i]!=' '){
 			auxPalavra[i]=string[i];
 			i++;
-		}
+		} 
 		while(string[i]==' ')
 			i++;
 
