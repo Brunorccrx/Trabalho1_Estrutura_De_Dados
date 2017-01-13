@@ -82,7 +82,7 @@ Dicionario *definirDicionario(Dicionario *dicionario,char *string){
 
 	free(auxPalavra);//Libera a palavra para ser utilizada novamente
 }
-return dicionario;
+	return dicionario;
 }
 
 Palavra *iniciarPalavra(){
