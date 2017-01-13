@@ -24,30 +24,64 @@ Dicionario *buscaPalavra(Dicionario *dicionario,char *string){
 	return d;
 }
 
-
-Dicionario *definirDicionario(char *string, Dicionario *dicionario){
+Dicionario *definirDicionario(Dicionario *dicionario,char *string){
 	int i;
+	int j=0;
 	int linhaAtual=0;
-	char auxPalavra[20]={0};
-	Dicionario *d;
-	for(i=0;i<strlen(string)-4;){//strlen está considerando vazios e lixo por isso "-4"
-		while(string[i]!=' '|| string[i]!='\n'){
-			auxPalavra[i]=string[i];
+	Dicionario *daux=NULL;
+
+	for(i=0;i<strlen(string);j=0){
+		char *auxPalavra=(char *)malloc(20*sizeof(char));
+		while(string[i]!=' ' && string[i]!='\n' && string[i]!=13){//13 se refere a retorno do começo da linha
+			auxPalavra[j]=string[i];
 			i++;
+			j++;
 		}
-		while(string[i]==' '|| string[i]=='\n')
-			i++;
 
-		if(buscaPalavra(dicionario,auxPalavra)==NULL){
-			Dicionario *novo=(Dicionario *)malloc(sizeof(Dicionario *));
-			Palavra *nova=(Palavra *)malloc(sizeof(Palavra *));
-
-			strcpy(auxPalavra,novo->palavra);
-
-			novo->proxD=dicionario;
-			dicionario = novo;
-
-		}
+//Remover lixo que ficou armazenado no vetor após a leitura do arquivo
+	if(auxPalavra[3]<32){
+		if(auxPalavra[1]==47)
+			auxPalavra[1]='\0';
+		else if(auxPalavra[2]==46)
+			auxPalavra[2]='\0';
+		else
+			auxPalavra[3]='\0';
 	}
-	return novo;
+	if(auxPalavra[11]<32){
+		if(auxPalavra[8]==40)
+			auxPalavra[8]='\0';
+		else if(auxPalavra[9]==47)
+			auxPalavra[9]='\0';
+		else if(auxPalavra[10]==46)
+			auxPalavra[10]='\0';
+		else
+			auxPalavra[11]='\0';
+		}
+
+	daux=buscaPalavra(dicionario,auxPalavra);
+
+	if(daux==NULL){//Palavra nova que não está no dicionário
+		dicionario=inserirDicionario(dicionario,auxPalavra);
+		dicionario->proxN=inserirNo(dicionario->proxN,linhaAtual);
+	}
+	else if(daux->proxN->linha==linhaAtual){//Repetição de palavra na mesma linha
+		daux->proxN->repeticoes++;
+	}
+	else{//Repetição de palavra em linha diferente
+		daux->proxN=inserirNo(daux->proxN,linhaAtual);
+	}
+
+	 while(string[i]==' ' || string[i]==13)//pular espaços
+		i++;
+
+	 if(string[i]=='\n'){//Mudança de linha
+	 	 linhaAtual++;
+		 i++;
+	 }
+
+
+	free(auxPalavra);//Libera a palavra para ser utilizada novamente
 }
+return dicionario;
+}
+
