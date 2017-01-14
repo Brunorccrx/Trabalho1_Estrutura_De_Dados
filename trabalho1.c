@@ -11,7 +11,7 @@ char *lerArquivo(){
   p_Arquivo = fopen("Entrada.txt","r");
   for(i=0;!feof(p_Arquivo);i++){
 		c=fgetc(p_Arquivo);
-			string[i]=c;
+		string[i]=c;
 	}
 	string[i-1]='\0';
   fclose(p_Arquivo);
