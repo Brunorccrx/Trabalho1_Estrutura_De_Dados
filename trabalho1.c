@@ -2,27 +2,57 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
+
 char *lerArquivo(){
 	FILE *p_Arquivo;
-	char *string=(char *)malloc(100*sizeof(char *));
-	int i=0;
+	char *string=(char *)malloc(1000000000*sizeof(char));
+	int i;
+	int c;
   p_Arquivo = fopen("Entrada.txt","r");
-  for(i=0;!feof(p_Arquivo);i++)
-  	string[i] = fgetc(p_Arquivo);
-
+  for(i=0;!feof(p_Arquivo);i++){
+		c=fgetc(p_Arquivo);
+			string[i]=c;
+	}
+	string[i-1]='\0';
   fclose(p_Arquivo);
-
 	return string;
 }
-Dicionario *iniciarDicionario(Dicionario *dicionario){
-	return NULL;
-}
+
 Dicionario *buscaPalavra(Dicionario *dicionario,char *string){
-	Dicionario *d;
-	for(d=dicionario;d!=NULL && strcmp(string,d->palavra)!=0;d=d->proxD){
+	Dicionario *d=NULL;
+
+	for(d=dicionario;d!=NULL && strcmp(d->palavra,string)!=0;d=d->proxD){
+
 	}
 	return d;
 }
+
+No *inicializarNo(){
+	return NULL;
+}
+No *inserirNo(No *n,int linhaAtual){
+	No *novo=(No *)malloc(sizeof(No));
+	novo->linha=linhaAtual;
+	novo->repeticoes=1;
+
+	novo->prox=n;
+	n=novo;
+
+	return novo;
+}
+Dicionario *inicializarDicionario(){
+	return NULL;
+}
+Dicionario *inserirDicionario(Dicionario *dicionario,char *string){
+	Dicionario *novo=(Dicionario *)malloc(sizeof(Dicionario));
+	novo->proxN=inicializarNo();
+	strcpy(novo->palavra,string);
+	novo->proxD=dicionario;
+	dicionario=novo;
+
+	return novo;
+}
+
 
 Dicionario *definirDicionario(Dicionario *dicionario,char *string){
 	int i;
@@ -82,6 +112,21 @@ Dicionario *definirDicionario(Dicionario *dicionario,char *string){
 
 	free(auxPalavra);//Libera a palavra para ser utilizada novamente
 }
-return dicionario;
+	return dicionario;
 }
 
+void imprimirDicionario(Dicionario *dicionario){
+	Dicionario *d;
+	No *n;
+
+	for(d=dicionario;d!=NULL;d=d->proxD){
+		printf("%s:",d->palavra);
+		for(n=d->proxN;n!=NULL;n=n->prox){
+			if(n->prox==NULL)
+				printf("(%d,%d)",n->linha,n->repeticoes);
+			else
+				printf("(%d,%d), ",n->linha,n->repeticoes);
+		}
+		printf("\n");
+	}
+}
