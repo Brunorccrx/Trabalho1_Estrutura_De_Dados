@@ -128,5 +128,5 @@ void imprimirDicionario(Dicionario *dicionario){
 				printf("(%d,%d), ",n->linha,n->repeticoes);
 		}
 		printf("\n");
-	}
+	} 
 }
