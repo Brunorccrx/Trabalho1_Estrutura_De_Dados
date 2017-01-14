@@ -34,7 +34,7 @@ No *inserirNo(No *n,int linhaAtual){
 	No *novo=(No *)malloc(sizeof(No));
 	novo->linha=linhaAtual;
 	novo->repeticoes=1;
-
+ 
 	novo->prox=n;
 	n=novo;
 
