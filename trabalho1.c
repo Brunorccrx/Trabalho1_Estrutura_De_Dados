@@ -2,7 +2,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
-//trabalho1.c
+
 char *lerArquivo(){
 	FILE *p_Arquivo;
 	char *string=(char *)malloc(1000000000*sizeof(char));
